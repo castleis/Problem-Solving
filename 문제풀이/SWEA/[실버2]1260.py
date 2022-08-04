@@ -29,31 +29,30 @@ class Aaa:
         self.visited[v] = True
         #스택이 비어있지 않으면
         while s:
-            #모든 노드를 방문했으면 break. 여기가 좀 이상한듯
-            # if len(orders) == n:
-            #     break
+            if False not in self.visited:
+                print("all-visited")
+                break
+            
             # 방문순서 리스트 orders에 스택에 들어간 노드를 꺼내 저장해줌.
             i = s.pop()
             print(f'방문 : {i}')
+            self.visited[i] = True
+            print(f'방문여부 :{self.visited}')
             orders.append(i)
             print(f'방문 순서:{orders}')
-            if False not in self.visited:
-                break
+            
 
             # 인접리스트에 있는 간선들에 대해서
             for x,y in graphs[i]:
-                print(f'다음 방문 :{y}')
+                # print(f'다음 방문 :{y}')
                 #이미 방문한 인접 노드이면 continue
                 # if self.visited[y] == True:
                 #     continue
                 #방문하지 않은 노드라면 스택에 추가하고 해당 노드로 재귀호출
                 if self.visited[y] == False :
                     s.append(y)
-                    self.visited[y] = True
-                    
-                    print(f'방문여부 :{self.visited}')
                     # print(f'스택:{s}')
-                    Aaa.dfs(self,graphs,y)
+                    # Aaa.dfs(self,graphs,y)
                 else :
                     continue
         #방문 순서 리스트를 return
