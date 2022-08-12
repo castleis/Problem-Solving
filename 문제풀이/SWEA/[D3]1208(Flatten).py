@@ -1,6 +1,6 @@
 import sys
 
-sys.stdin = open('1208.txt')
+sys.stdin = open('input\1208.txt')
 
 def quick_sort(arr):
     if len(arr) <= 1:
