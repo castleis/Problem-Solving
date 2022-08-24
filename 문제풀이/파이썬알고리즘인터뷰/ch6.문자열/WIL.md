@@ -17,3 +17,16 @@ s = ['2 A', '1 B', '4 C', '1 A']
 >>> s.sort(key = lambda x : (x.split()[1], x.split()[0]))
 # ['1 A','2 A','1 B','4 C']
 ```
+
+## 데이터 클렌징 Data Clensing
+- 대소문자와 쉼표 등의 구두점이 섞여있는 입력값을 전처리하는 과정
+- 입력 : 
+  - paragraph = "Bob hit a ball, the hit BALL flew far after it was hit."
+  - 정규식을 섞어 처리하면 다음과 같다.
+```python
+words = [word for word in re.sub(r'[^\w]', ' ', paragraph)
+    .lower().split()
+        if word not in banned]
+```
+- 정규식에서 \w 는 단어문자를 뜻하며 ^ 는 not을 의미
+- 따라서 위 정규식은 단어 문자가 아닌 모든 문자를 공백으로 치환하는 역할을 한다.
