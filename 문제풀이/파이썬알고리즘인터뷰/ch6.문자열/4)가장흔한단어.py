@@ -7,10 +7,6 @@ banned = ["hit"]
 "ball"
 '''
 
-
-import collections
-
-
 paragraph = input().lower().split()
 new_para = []
 for word in paragraph:
@@ -37,12 +33,13 @@ for i in range(len(dict)):
         result = i
 print(result)
 
-# Sol
-'''정규식과 Counter 객체를 이용'''
+# Sol1. 리스트 컴프리헨션, Counter 객체 이용
+import collections
 def mostCommonWord(paragraph,banned):
-    words = [word for word in re.sub(r'[^\w]', ' ', paragraph)
-    .lower().split()
-    if word not in banned]
+    # 데이터 클렌징, 정규식으로 표현
+    # 단어 문자가 아닌 모든 문자('[^\w]')를 공백(' ')으로 치환
+    words = [word for word in re.sub(r'[^\w]', ' ', paragraph).lower().split() if word not in banned]
 
     counts = collections.Counter(words)
+    # 이 문제에서 most_common(1)은 [('ball', 2)]가 됨.
     return counts.most_common(1)[0][0]

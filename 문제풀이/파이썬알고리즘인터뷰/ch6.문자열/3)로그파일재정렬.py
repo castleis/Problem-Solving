@@ -23,3 +23,16 @@ def reorderLogFiles(logs):
     return letters + digits
 logs = ["dig1 8 1 5 1","let1 art can","dig2 3 6","let2 own kit dig","let3 art zero"]
 print(reorderLogFiles(logs))
+
+# Sol1. 람다와 + 연산자를 이용
+def reorderLogFiles(logs):
+    letters, digits = [],[]
+    for log in logs:
+        # log의 [1]번째가 digit이라면
+        if log.split()[1].isdigit():
+            digits.append(log)
+        else:
+            letters.append(log)
+    # 문자 로그는 1. 문자열, 2. 식별자의 순으로 정렬한다.
+    letters.sort(key = lambda x : (x.split()[1:], x.split()[0]))
+    return letters + digits

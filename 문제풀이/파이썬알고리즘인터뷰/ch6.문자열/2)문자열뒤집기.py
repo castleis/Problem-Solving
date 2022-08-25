@@ -15,7 +15,7 @@ print(swap(str1))
 print(swap(str2))
 
 # Sol1. 투 포인터를 이용한 스왑
-def reverseString(s) -> None:
+def reverseString1(s):
     left,right = 0,len(s)-1
     # s = s[::-1] -> 리트코드에서는 오류 발생.
     # s[:] = s[::-1] ->
@@ -25,5 +25,9 @@ def reverseString(s) -> None:
         right -=1
     return s
 s = ["h","e","l","l","o"]
-print(reverseString(s))
+print(reverseString1(s))
 
+# Sol2. 파이썬다운 방식
+def reverseString2(s):
+    s.reverse()
+    return s

@@ -35,8 +35,9 @@ def isPalindrome1(self,s:str) -> bool:
 
 #Sol2. 데크 자료형을 이용한 최적화, 64ms
 '''deque를 선언함으로 속도 높이기'''
+from collections import deque
 def isPalindrome2(s):
-    strs : Deque = collections.deque()   # 머임?
+    strs = deque()   # 머임?
 
     for char in s:
         if char.isalnum():
