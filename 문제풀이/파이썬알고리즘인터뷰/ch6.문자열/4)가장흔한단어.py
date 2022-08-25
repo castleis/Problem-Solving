@@ -27,6 +27,8 @@ for word in new_para:
         continue
     else:
         dict[word] += 1
+# dictionary 밸류 값을 기준으로 최댓값 구하기
+# 
 maxx = 0
 for i in range(len(dict)):
     if dict[i] > maxx:

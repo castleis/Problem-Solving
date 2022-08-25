@@ -5,8 +5,11 @@
 '''
 nums = list(map(int,input().split()))
 nums.sort()
+maxx = 0
+for i in range(0,len(nums),2):
+    maxx += min(nums[i],nums[i+1])
+print(maxx)
 
-'''
-N개의 페어를 만들기 위한 작업
-서로 다른 2개를 N번 뽑기
-'''
+# Sol1. 오름차순 풀이
+def arrayPairSum(nums):
+    
