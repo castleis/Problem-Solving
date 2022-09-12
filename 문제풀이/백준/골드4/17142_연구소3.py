@@ -1,30 +1,34 @@
-# 0 : 빈칸, 1 : 벽, 2 : 바이러스
 from itertools import combinations
 import sys
-import time
 input = sys.stdin.readline
+'''
+!!반례 테스트케이스!!
+9 1
+0 2 2 2 2 2 2 2 0
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1
+1 1 1 1 1 1 1 1 1
+# 4
+'''
 
-
-def virus(info):
+def findvirus(info):
     viruss = []
     virus_cnt = 0
     for i in range(N):
         for j in range(N):
             if info[i][j] == 2:
                 viruss.append((i,j))
-                info[i][j] = 0
-                virus_cnt += 1
+                info[i][j] = '*'
             elif info[i][j] == 0:
                 virus_cnt += 1
     return viruss, virus_cnt
 
-def checkk(N,visited):
-    for i in range(N):
-        for j in range(N):
-            if visited[i][j] == -1:
-                return False
-
-def pandemic(virus, info, virus_cnt):
+def makevirus(virus, info, virus_cnt):
     virus_set = combinations(virus, M)
     d = [(1,0),(-1,0),(0,1),(0,-1)]
     days = []
@@ -35,8 +39,6 @@ def pandemic(virus, info, virus_cnt):
         cnt = virus_cnt
         for x,y in stack:
             visited[x][y] = 0
-            cnt -= 1
-
         while stack:
             x,y = stack.pop(0)
             for dx,dy in d:
@@ -48,28 +50,18 @@ def pandemic(virus, info, virus_cnt):
                         stack.append((nx,ny))
                         day = max(day, visited[nx][ny])
                         cnt -= 1
-                    if info[nx][ny] == 1:
-                        visited[nx][ny] = '-'
-
-        if checkk(N,visited) == False:
-            if cnt == 0:
-                days.append(day)
-            else:
-                pass
-        else:
+                    elif info[nx][ny] == '*':
+                        if cnt > 0:
+                            visited[nx][ny] = visited[x][y] + 1
+                            stack.append((nx,ny))
+        if cnt == 0:
             days.append(day)
-
     if len(days) == 0:
         return -1
-
     return min(days)
 
-st = time.time()
 N,M = map(int,input().split())
 info = [list(map(int,input().split())) for _ in range(N)]
-viruss,virus_cnt = virus(info)
-ans = pandemic(viruss, info, virus_cnt)
-print(ans)
-et = time.time()
-print(et-st)
+viruss,virus_cnt = findvirus(info)
+print(makevirus(viruss, info, virus_cnt))
 
