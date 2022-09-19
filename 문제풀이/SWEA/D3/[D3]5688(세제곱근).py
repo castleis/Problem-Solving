@@ -1,7 +1,7 @@
+import math
 
 def solve(N):
-    print(N**(1/3) == int(N**(1/3)))
-    if N**(1/3) == int(N**(1/3)):
+    if math.isclose(N**(1/3), int(N**(1/3))):
         return int(N**(1/3))
     else:
         return -1
