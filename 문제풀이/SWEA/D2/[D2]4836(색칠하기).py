@@ -4,7 +4,7 @@
 #3 7
 '''
 import sys
-sys.stdin = open('0811/4836.txt')
+sys.stdin = open('input/4836.txt')
 
 T = int(input())
 for t in range(1,T+1):
