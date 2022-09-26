@@ -1,36 +1,59 @@
 # leetcode 743
+from collections import deque, defaultdict
+import heapq
 
 class Solution:
     def networkDelayTime(times, n, k):
         info = [[] for _ in range(n+1)]
         for time in times:
-            x, *y = time
-            info[x].append(y)
+            u,v,w = time
+            info[u].append((w,v))
         # 각 정점을 방문했는지 체크할 리스트
-        cnt = 1
-        visited = [0]*(n+1)
         def dfs(k):
-            # 스타트 지점은 999
-            visited[k] = 999
-            
-            if info[k] == []:
-                return cnt
-                
-            for x,y in info[k]:
-                # 아직 방문하지 않은 정점이라면
-                if not visited[x]:
-                    print(f'방문할 정점 : {x}')
-                    visited[x] = visited[k] + y
-                    cnt += 1
-                    dfs(x)
-            return cnt
-        result = dfs(k)
-        if result == n:
-            return max(visited)-999
-        else:
-            return -1
+            visited = [0]*(n)
+            q = []
+            q.append((0,k))
+            while q:
+                q.sort()
+                time,m = q.pop(0)
+                print(f'방문할 정점 : {m}')
+                print(info[m])
+                for t,x in info[m]:
+                    # 아직 방문하지 않은 정점이라면
+                    if not visited[x-1]:
+                        visited[x-1] = time + t
+                        q.append((visited[x-1],x))
+                        print(f'visited : {visited}')
+                        break
+                print(f'q : {q}')
+            return visited
 
-times = [[2,1,1],[2,3,1],[3,4,1]]
-n = 4
-k = 2
+        ans = dfs(k)
+        return max(ans)
+
+times = [[1,2,1],[2,3,2],[1,3,4]]
+n = 3
+k = 1
 print(Solution.networkDelayTime(times,n,k))
+
+# Solution
+def networkDelayTime1(times,N,K):
+    graph = defaultdict(list)
+
+    for u,v,w in times:
+        graph[u].append((v,w))
+    # 큐에는 (소요시간, 정점) 순으로 담는다
+    Q = [(0,K)]
+    dist = defaultdict(int)
+
+    while Q:
+        time, node = heapq.heappop(Q)
+        if node not in dist:
+            dist[node] = time
+            for v,w in graph[node]:
+                alt = time + w
+                heapq.heappush(Q,(alt,v))
+    
+    if len(dist) == N:
+        return max(dist.values())
+    return -1
