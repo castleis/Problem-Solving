@@ -1,6 +1,6 @@
 from collections import deque
 
-def solve(x,y,size,cnt):
+def hunt(x,y,size,cnt):
     d = [(-1,0),(0,-1),(1,0),(0,1)]
     visited = [[0]*N for _ in range(N)]
     q = deque()
@@ -40,7 +40,7 @@ size = 2
 
 while True:
     print(f'===================================================')
-    ans = solve(x,y,size,cnt)
+    ans = hunt(x,y,size,cnt)
     print(f'ans : {ans}')
     if ans == 0:
         break 
@@ -48,4 +48,3 @@ while True:
     time += t
 
 print(time, size)
-print(sea)

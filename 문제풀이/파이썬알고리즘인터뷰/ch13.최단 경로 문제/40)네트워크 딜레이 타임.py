@@ -57,3 +57,28 @@ def networkDelayTime1(times,N,K):
     if len(dist) == N:
         return max(dist.values())
     return -1
+
+# Solution2
+def networkDelayTime2(times,n,k):
+    from collections import deque
+    import sys
+    inf = sys.maxsize
+
+    adj_list = [[] for _ in range(n+1)]
+    distance = [0] + [inf]*n
+    distance[k] = 0
+    for u,v,w in times:
+        adj_list[u].append((v,w))
+    
+    dq = deque()
+    dq.append((0,k))
+    while dq:
+        time, node = dq.popleft()
+        for v,w in adj_list[node]:
+            if time + w < distance[v]:
+                distance[v] = time + w
+                dq.append((time + w , v))
+    result = max(distance)
+    if result == inf:
+        return -1
+    else: return result
