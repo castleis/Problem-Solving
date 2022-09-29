@@ -4,7 +4,7 @@ class Solution:
     def longestUnivaluePath(root):
         def dfs(node):
             if not node:
-                return
+                return 0
             left = dfs(node.left)
             right = dfs(node.right)
 
@@ -17,3 +17,6 @@ class Solution:
             
             self.longest = max(self.longest, left+right)
             return max(left,right)
+        
+        dfs(root)
+        return self.longest
