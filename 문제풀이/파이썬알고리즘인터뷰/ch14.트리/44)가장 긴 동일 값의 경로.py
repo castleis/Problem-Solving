@@ -8,10 +8,10 @@ class Solution:
             left = dfs(node.left)
             right = dfs(node.right)
 
-            if node.left and node.left == node:
+            if node.left and node.left.val == node.val:
                 left += 1
             else: left = 0
-            if node.right and node.right == node:
+            if node.right and node.right.val == node.val:
                 right += 1
             else: right = 0
             
