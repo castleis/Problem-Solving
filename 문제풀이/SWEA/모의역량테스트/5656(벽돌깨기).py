@@ -14,22 +14,23 @@ def map_making(arrs):
 def crush(w,cur_h,mapp):
     d = [(1,0),(0,1),(-1,0),(0,-1)]
     queue = deque()
-    queue.append((cur_h,w))
+    queue.append((cur_h,w,mapp[cur_h][w]))
     mapp[cur_h][w] = 0
     crushed = 1
     while queue:
         # print(queue)
-        x,y = queue.popleft()
+        x,y,p = queue.popleft()
         for dx, dy in d:
-            for n in range(1,mapp[x][y]):
+            for n in range(1,p):
                 nx,ny = x+n*dx, y+n*dy
-                if 0 <= nx < H and 0 <= ny < W and mapp[nx][ny]:
+                if 0 <= nx < H and 0 <= ny < W and mapp[nx][ny] != 0:
                     if mapp[nx][ny] != 1:
-                        queue.append((nx,ny))
+                        queue.append((nx,ny,mapp[nx][ny]))
                     crushed += 1
                     mapp[nx][ny] = 0
-    print()
-    print(f'after crushed : {mapp}')
+    # print()
+    # print(f'after crushed : {mapp}')
+    # print(f'crushed : {crushed}')
     return crushed
 
 def sortt(mapp):
@@ -46,23 +47,28 @@ def sortt(mapp):
 
 def dfs(crushed,k,arrs):
     global maxx
+    if crushed == bricks:
+        maxx = crushed
+        return
     if k == N:
         if maxx < crushed:
             maxx = crushed
+            # print(maxx)
         return
     for w in range(W):
         mapp = map_making(arrs)
-        cur_h = 0
+        cur_h = -1
         for h in range(H):
             if mapp[h][w] == 0:
                 pass
             else:
                 cur_h = h
                 break
-        crushed += crush(w,cur_h,mapp)
-        sortt(mapp)
-        print(f'after sorted : {mapp}')
-        dfs(crushed,k+1,mapp)
+        if cur_h != -1:
+            result = crush(w,cur_h,mapp)
+            mapp = sortt(mapp)
+            # print(f'after sorted : {mapp}')
+            dfs(crushed+result,k+1,mapp)
     
 
 for t in range(1,int(input())+1):
@@ -75,6 +81,6 @@ for t in range(1,int(input())+1):
                 bricks += 1
     maxx = 0
     dfs(0,0,arr)
-    print(bricks,maxx)
     ans = bricks - maxx
+    # print(bricks,maxx)
     print(f'#{t} {ans}')
