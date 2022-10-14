@@ -1,7 +1,7 @@
 import sys
 sys.stdin = open('input/2117.txt')
 
-pay = [k**2 + (k-1)**2 for k in range(21)]
+pay = [k**2 + (k-1)**2 for k in range(26)]
 # print(pay)
 
 for tc in range(1,int(input())+1):
@@ -14,27 +14,18 @@ for tc in range(1,int(input())+1):
         for j in range(N):
             if mapp[i][j]:
                 homes.append((i,j))
-    # print(homes)
-    result = [0]*N
-    for k in range(3,4):
-        for i,j in homes:
-            cnt = 0
-            for x in range(-k,k):
-                for y in range(-(k-x), k-x):
-                    if 0 <= i+x < N and 0 <= j+y < N:
-                        if mapp[i+x][j+y]:
-                            cnt += 1
-            # print(i,j,k,cnt)
-            result[k] = max(result[k], cnt*M - pay[k])
-    # print(result)
-k = 3
-i,j = 3,3
-cnt = 0
-for x in range(-k,k):
-    print(f'=========={x}=============')
-    for y in range(-(-k-x), (k+x)):
-        cnt += 1
-        print(x,y)
-print(cnt)
+    max_profit = 0
+    for k in range(1,N+5):
+        for x in range(N):
+            for y in range(N):
+                home_cnt = 0
+                for i,j in homes:
+                    if abs(x-i) + abs(y-j) <= k:
+                        if mapp[x-i][y-j] or mapp[i-x][y-j] or mapp[x-i][j-y] or mapp[i-x][j-y]:
+                            home_cnt += 1
 
-# 마름모 만들기
+                if home_cnt * M >= pay[k]:
+                    if max_profit < home_cnt * M - pay[k]:
+                        ans = home_cnt
+
+    print(f'#{tc} {ans}')
