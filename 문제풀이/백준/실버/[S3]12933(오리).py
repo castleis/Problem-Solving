@@ -17,7 +17,6 @@ def ducks(start):
 
 duck = input().strip()
 length = len(duck)
-print(length)
 visited = [0]*length
 cnt = 0
 if length % 5 != 0 or duck[0] != 'q':
