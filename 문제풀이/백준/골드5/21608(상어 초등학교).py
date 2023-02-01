@@ -33,22 +33,24 @@ def where(I):
 
 def satisfying():
     satisfaction = 0
+    # 학생 수 만큼 반복문
     for i in range(1,N*N+1):
         x,y = dictt[i]
-        freind = 0
+        friend = 0
+        # i번째 학생 주위를 탐색, 좋아하는 친구가 상하좌우에 존재하면 만족하는 것
         for dx,dy in d:
             nx,ny = x+dx, y+dy
             if 0 <= nx < N and 0 <= ny < N:
                 if seat[nx][ny] in like[i]:
-                    freind += 1
-        if freind > 0: 
-            satisfaction += 10**(freind-1)
+                    friend += 1
+        if friend > 0: 
+            satisfaction += 10**(friend-1)
     return satisfaction
 
 N = int(input())
 # like[i] : i번째 학생이 좋아하는 친구들 리스트
 like = {}
-# 학생들의 자리배치 현황표
+# 학생들의 자리배치 현황표, dictt에는 i번째 친구가 앉은 좌표를 저장
 seat = [[0]*N for _ in range(N)]
 dictt = {}
 d = [(1,0),(0,1),(-1,0),(0,-1)]
