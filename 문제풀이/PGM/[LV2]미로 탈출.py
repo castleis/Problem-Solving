@@ -14,24 +14,20 @@ def solution(maps):
                         queue.append((nx,ny))
                         V[nx][ny] = V[x][y] + 1
                     if maps[nx][ny] == target:
-                        return nx,ny, V[nx][ny]
-        return -1
+                        return nx, ny, V[nx][ny]
+        return False
     M = len(maps[0])
     N = len(maps)
     D = [(1,0),(0,1),(-1,0),(0,-1)]
-    answer = 0
+    answer = -1
     for i in range(N):
         for j in range(M):
             if maps[i][j] == 'S':
                 result = bfs(i,j,'L')
-                if result != -1:
+                if result:
                     result1 = bfs(result[0],result[1],'E')
-                    if result1 != -1:
+                    if result1:
                         answer = result[2] + result1[2]
-                    else:
-                        answer = -1
-                else:
-                    answer = -1
                 return answer
 
 maps = ["SOOOL","XXXXO","OOOOO","OXXXX","OOOOE"]
