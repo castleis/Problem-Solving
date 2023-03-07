@@ -51,6 +51,7 @@ print(maps)
 print(solve())
 '''
 
+'''
 from collections import deque
 import sys
 input = sys.stdin.readline
@@ -93,3 +94,54 @@ for i in range(1,N+1):
             maps[i].append(j+1)
 schedule = list(map(int,input().split()))
 print(solve())
+'''
+
+# Find - Union 알고리즘
+import sys
+input = sys.stdin.readline
+
+N = int(input())
+M = int(input())
+root = [n for n in range(N)]
+
+def find(x):
+    while x != root[x]:
+        x = root[x]
+    return x
+
+def union(x,y):
+    root_x = find(x)
+    root_y = find(y)
+    if root_x != root_y:
+        root[root_x] = root[root_y] = min(root_x, root_y)
+    return
+
+for i in range(N):
+    info = list(map(int,input().split()))
+    for j in range(N):
+        if info[j]:
+            union(i,j)
+
+schedule = list(map(lambda x: int(x)-1,input().split()))
+# print('schedule : ', schedule)
+def solve():
+    for city in range(M-1):
+        start, end = schedule[city], schedule[city+1]
+        # print(start, end)
+        if find(start) != find(end):
+            return 'NO'
+    return 'YES'
+print(solve())
+
+# def is_union(a,roots):
+#     que = [a]
+#     V = [0]*(N+1)
+#     V[root[a]] = 1
+#     while que:
+#         city = que.pop()
+#         if root[city] == roots:
+#             return True
+#         elif root[city] != roots and not V[root[city]]:
+#             que.append(root[city])
+#             V[root[city]] = 1
+#     return False
