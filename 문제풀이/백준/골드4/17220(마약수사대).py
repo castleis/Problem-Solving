@@ -28,7 +28,7 @@ for _ in range(M):
     x,y = input().split()
     a,b = preset[x], preset[y]
     parent[b].append(a)
-    print(parent)
+    # print(parent)
 num, *info = input().split()
 knowns = set()
 for n in info:
@@ -38,11 +38,54 @@ for i in range(N):
     # print(parent[i])
     if not parent[i]:
         root.add(i)
-print(root)
+# print(root)
 ans = 0
 check = set(i for i in range(N)) - root - set(knowns)
 for a in check:
     # print(f'======={a}')
+    if bfs(a):
+        ans += 1
+print(ans)
+
+''''''
+from collections import defaultdict, deque
+import sys
+input = sys.stdin.readline
+
+def bfs(a):
+    V = defaultdict(int)
+    Q = deque([a])
+    V[a] = 1
+    while Q:
+        x = Q.popleft()
+        for y in parent[x]:
+            if not V[y]:
+                if y in knowns:
+                    continue
+                # 부모를 타고 올라가다가 마약 공급원을 만나면 True를 리턴
+                if y in root:
+                    return True
+                Q.append(y)
+                V[y] = 1
+    # 마약 공급원을 만나지 못하면 False를 리턴
+    return False
+
+N,M = map(int,input().split())
+parent = defaultdict(list)
+for _ in range(M):
+    a,b = input().split()
+    parent[b].append(a)
+    if not parent[a]:
+        parent[a] = []
+num, *knowns = input().split()
+root = set()
+for i in parent.keys():
+    if not parent[i]:
+        root.add(i)
+ans = 0
+for a in parent.keys():
+    if a in root or a in knowns:
+        continue
     if bfs(a):
         ans += 1
 print(ans)
