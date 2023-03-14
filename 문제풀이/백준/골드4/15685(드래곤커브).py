@@ -6,12 +6,11 @@ V = [[0]*101 for _ in range(101)]
 pos = []
 def rotate():
     global pos
-    i,j,k = pos[-1]
     for n in range(len(pos)-1):
+        i,j,k = pos[-1]
         x,y,d = pos[n]
-        dx,dy = D[d % 4]
-        pos.append((i+dx, j+dy, d%4))
-        i,j = i+dx, j+dy
+        dx,dy = D[(d+1)%4]
+        pos.append((i+dx, j+dy, (d+1)%4))
         V[i][j] = 1
     return
 for x,y,d,g in info:
@@ -21,8 +20,10 @@ for x,y,d,g in info:
         rotate()
         print(pos)
 ans = 0
+# check 용 리스트
+check = [1,1]
 for i in range(100):
     for j in range(100):
-        if V[i][j] == V[i+1][j] == V[i][j+1] == V[i+1][j+1] == 1:
+        if pos[i][j:j+1] == pos[i+1][j:j+1] == 1:
             ans += 1
 print(ans)
