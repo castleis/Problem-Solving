@@ -1,29 +1,25 @@
 N = int(input())
-info = [tuple(map(int,input().split())) for _ in range(N)]
-print(info)
 D = {0:(1,0),1:(0,-1),2:(-1,0),3:(0,1)}
 V = [[0]*101 for _ in range(101)]
-pos = []
-def rotate():
-    global pos
-    for n in range(len(pos)-1):
-        i,j,k = pos[-1]
-        x,y,d = pos[n]
-        dx,dy = D[(d+1)%4]
-        pos.append((i+dx, j+dy, (d+1)%4))
-        V[i][j] = 1
-    return
-for x,y,d,g in info:
-    pos.append((x,y,d))
-    V[x][y] = 1
+
+for _ in range(N):
+    x,y,d,g = map(int,input().split())
+    V[y][x] = 1
+    x,y = x+D[d][0], y+D[d][1]
+    V[y][x] = 1
+    pos = [(d+1)%4]
+    # 1~g 세대 커브를 만들어주기
     for _ in range(g):
-        rotate()
-        print(pos)
+        next = []
+        for d in pos[::-1]:
+            dx,dy = D[d]
+            x, y = x+dx, y+dy
+            next.append((d+1)%4)
+            V[y][x] = 1
+        pos += next
 ans = 0
-# check 용 리스트
-check = [1,1]
 for i in range(100):
     for j in range(100):
-        if pos[i][j:j+1] == pos[i+1][j:j+1] == 1:
+        if V[i][j] == V[i][j+1] == V[i+1][j] == V[i+1][j+1] == 1:
             ans += 1
 print(ans)
