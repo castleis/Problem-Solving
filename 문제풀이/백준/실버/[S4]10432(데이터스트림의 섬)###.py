@@ -5,22 +5,21 @@
 '''
 
 for _ in range(int(input())):
-    T, *nums = map(int,input().split())
-    i,j = 0,1
     cnt = 0
-    while j < 12:
-        print(f'========= {i}, {j} ==========')
-        flag = False
-        print(nums[i], nums[j])
-        if nums[j] <= nums[i]:
-            print('??')
-            i += 1
-            if flag:
-                print('cnt', cnt)
-                cnt += 1
-                j = i
-        elif nums[j] > nums[i]:
-            flag = True
-        j += 1
-        # print(i,j)
-    print(f' cnt: {cnt}')
+    T, *nums = map(int,input().split())
+    # for num in nums:
+    #     num = str(num-1)
+    nums = [str(num-1) for num in nums]
+    # print(nums)
+    print('~~~~~~', T, '~~~~~~')
+    print(nums)
+    i = -1
+    nums = ''.join(nums)
+    while len(nums) > 0:
+        nums = nums.split(str(i))
+        print(nums)
+        cnt += len(nums) - nums.count('')
+        nums = ''.join(nums)
+        print(f'{i} ====== {nums}')
+        i += 1
+    print('cnt :', cnt)
