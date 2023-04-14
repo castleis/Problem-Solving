@@ -28,8 +28,7 @@ def set_parent():
     for depth in range(1, max_depth):
         print(f'================== depth : {depth} ===================')
         for node in range(1,node_cnt+1):
-            print(f'node : {node}')
-            print('이전 조상 : ',parent_relation[depth-1])
+            print(f'node : {node}, {parent_relation[depth-1][node]}')
             parent_relation[depth][node] = parent_relation[depth-1][parent_relation[depth-1][node]]
 
 def LCA(x,y):
